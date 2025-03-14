@@ -2,6 +2,7 @@ package com.example.books.presentation.booklist
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.books.domain.model.Book
 import com.example.books.domain.usecase.SearchBooksUseCase
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.*
@@ -10,6 +11,13 @@ import kotlinx.coroutines.launch
 class BookViewModel(
     private val searchBooksUseCase: SearchBooksUseCase
 ) : ViewModel() {
+
+    data class BookState(
+        val books: List<Book> = emptyList(),
+        val searchQuery: String = "",
+        val isLoading: Boolean = false,
+        val error: String? = null
+    )
 
     sealed class NavigationEvent {
         data class NavigateToBookDetails(val bookId: String) : NavigationEvent()
@@ -41,7 +49,9 @@ class BookViewModel(
                 searchQueryFlow.value = event.query
             }
             is BookEvent.BookClicked -> {
-                //TODO
+                viewModelScope.launch {
+                    _navigationEvents.send(NavigationEvent.NavigateToBookDetails(event.bookId))
+                }
             }
         }
     }

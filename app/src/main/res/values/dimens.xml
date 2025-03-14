@@ -6,4 +6,9 @@
     <dimen name="book_item_card_padding">8dp</dimen>
     <dimen name="book_item_image_vertical_padding">8dp</dimen>
     <dimen name="book_item_text_padding">8dp</dimen>
+
+    <!-- BookDetailScreen -->
+    <dimen name="book_detail_cover_size">300dp</dimen>
+    <dimen name="book_detail_box_padding">16dp</dimen>
+    <dimen name="book_detail_column_spacing">16dp</dimen>
 </resources>

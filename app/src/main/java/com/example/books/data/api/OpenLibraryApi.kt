@@ -1,5 +1,6 @@
 package com.example.books.data.api
 
+import com.example.books.data.model.AuthorResponse
 import com.example.books.data.model.BookDetailResponse
 import com.example.books.data.model.BookSearchResponse
 import retrofit2.Response
@@ -18,4 +19,9 @@ interface OpenLibraryApi {
     suspend fun getBookDetails(
         @Path("workId") workId: String
     ): Response<BookDetailResponse>
+
+    @GET("authors/{authorId}.json")
+    suspend fun getAuthorDetails(
+        @Path("authorId") authorId: String
+    ): Response<AuthorResponse>
 }

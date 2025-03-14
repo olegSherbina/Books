@@ -5,6 +5,7 @@ import com.example.books.data.api.OpenLibraryApi
 import com.example.books.domain.repository.BookRepository
 import com.example.books.domain.repository.BookRepositoryImpl
 import com.example.books.domain.usecase.SearchBooksUseCase
+import com.example.books.presentation.bookdetails.BookDetailViewModel
 import com.example.books.presentation.booklist.BookViewModel
 import org.koin.core.module.dsl.viewModel
 import org.koin.dsl.module
@@ -22,4 +23,5 @@ val appModule = module {
     single<BookRepository> { BookRepositoryImpl(get()) }
     single { SearchBooksUseCase(get()) }
     viewModel { BookViewModel(get()) }
+    viewModel { BookDetailViewModel(get()) }
 }

@@ -42,6 +42,16 @@ fun BookScreen(
     //val focusManager = LocalFocusManager.current
     val keyboardController = LocalSoftwareKeyboardController.current
 
+    LaunchedEffect(Unit) {
+        viewModel.navigationEvents.collect { event ->
+            when (event) {
+                is BookViewModel.NavigationEvent.NavigateToBookDetails -> {
+                    navController.navigate(Routes.bookDetails(event.bookId))
+                }
+            }
+        }
+    }
+
     Column {
         OutlinedTextField(
             value = state.searchQuery,
@@ -64,7 +74,8 @@ fun BookScreen(
         LazyColumn {
             items(state.books) { book ->
                 BookItem(
-                    book = book
+                    book = book,
+                    onClick = { viewModel.onEvent(BookEvent.BookClicked(book.id)) }
                 )
             }
         }
@@ -76,11 +87,12 @@ fun BookScreen(
 }
 
 @Composable
-fun BookItem(book: Book) {
+fun BookItem(book: Book, onClick: () -> Unit) {
     println("Loading cover: ${book.coverUrl}")
     Card(
         modifier = Modifier
             .fillMaxWidth()
+            .clickable(onClick = onClick)
             .padding(dimensionResource(R.dimen.book_item_card_padding))
     ) {
         Row {
